@@ -32,9 +32,11 @@ const createCount = () => {
     return count;
   };
 };
-const idComment = createCount();
-const idPhoto = createCount();
-const unicUrl = createCount();
+const MIN_RANDOM_INT = 1;
+const MAX_RANDOM_INT = 6;
+const getIdComment = createCount();
+const getIdPhoto = createCount();
+const getUnicUrl = createCount();
 const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
@@ -42,22 +44,20 @@ const getRandomInteger = (a, b) => {
   return Math.floor(result);
 };
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
-const createComment = () =>
-  [
-    {
-      id: idComment(),
-      avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
-      message: getRandomArrayElement(COMMENTS),
-      name: getRandomArrayElement(NAMES),
-    }
-  ];
-const createUserPhoto = () => ({
-  id: idPhoto(),
-  url: `photos/${unicUrl()}.jpg`,
-  description: 'Сфотографировал недавно на выходных',
-  likes: getRandomInteger(LIKES.MIN, LIKES.MAX),
-  comments:
-    Array.from({length: getRandomInteger(QUANTITY_COMMENTS.MIN, QUANTITY_COMMENTS.MAX)}, createComment)
+const createComment = () => ({
+  id: getIdComment(),
+  avatar: `img/avatar-${getRandomInteger(MIN_RANDOM_INT, MAX_RANDOM_INT)}.svg`,
+  message: getRandomArrayElement(COMMENTS),
+  name: getRandomArrayElement(NAMES),
 });
+function createUserPhoto() {
+  return ({
+    id: getIdPhoto(),
+    url: `photos/${getUnicUrl()}.jpg`,
+    description: 'Сфотографировал недавно на выходных',
+    likes: getRandomInteger(LIKES.MIN, LIKES.MAX),
+    comments: Array.from({ length: getRandomInteger(QUANTITY_COMMENTS.MIN, QUANTITY_COMMENTS.MAX) }, createComment)
+  });
+}
 const similarPhotos = Array.from({length: SIMILAR_PHOTOS_COUNT}, createUserPhoto);
 similarPhotos.values();
