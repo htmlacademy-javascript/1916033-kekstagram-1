@@ -31,8 +31,10 @@ const createCount = () => {
     return ++count;
   };
 };
-const MIN_RANDOM_INT = 1;
-const MAX_RANDOM_INT = 6;
+const RANDOM_AVATARS = {
+  MIN: 0,
+  MAX: 6
+};
 const getIdComment = createCount();
 const getIdPhoto = createCount();
 const getUnicUrl = createCount();
@@ -45,7 +47,7 @@ const getRandomInteger = (a, b) => {
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 const createComment = () => ({
   id: getIdComment(),
-  avatar: `img/avatar-${getRandomInteger(MIN_RANDOM_INT, MAX_RANDOM_INT)}.svg`,
+  avatar: `img/avatar-${getRandomInteger(RANDOM_AVATARS.MIN, RANDOM_AVATARS.MAX)}.svg`,
   message: getRandomArrayElement(COMMENTS),
   name: getRandomArrayElement(NAMES),
 });
