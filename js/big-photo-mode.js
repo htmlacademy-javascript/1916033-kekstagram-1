@@ -1,6 +1,6 @@
 import {closeElement, showElement,isEscapeKey, modalOpenAdd, modalOpenRemove} from './util.js';
-import {picturesContainer} from './add-thumbnails.js';
 import {similarPhotos} from './data.js';
+
 const bigPicture = document.querySelector('.big-picture');
 const closeButton = document.querySelector('.big-picture__cancel');
 const bigPictureImg = bigPicture.querySelector('.big-picture__img img');
@@ -8,8 +8,8 @@ const socialComments = bigPicture.querySelector('.social__comments');
 const socialCommentTemplate = socialComments.querySelector('.social__comment');
 const likesCount = bigPicture.querySelector('.likes-count');
 const socialCaption = bigPicture.querySelector('.social__caption');
-const commentShownCount = bigPicture.querySelector('.social__comment-shown-count');
-const commentTotalCount = bigPicture.querySelector('.social__comment-total-count');
+const commentShownCount = bigPicture.querySelector('.social__comment-count');
+const commentTotalCount = bigPicture.querySelector('.comments-count');
 
 const updateBigPictureInfo = (photo) => {
   bigPictureImg.src = photo.url;
@@ -36,23 +36,19 @@ const openBigPicture = (pictureId) => {
   commentTotalCount.classList.add('hidden');
   showElement(bigPicture);
   modalOpenAdd();
+
+  const closeBigPicture = () => {
+    closeElement(bigPicture);
+    modalOpenRemove();
+  };
+
+  closeButton.addEventListener('click', closeBigPicture);
+  document.addEventListener('keydown', (evt) => {
+    if (isEscapeKey(evt)) {
+      evt.preventDefault();
+      closeBigPicture();
+    }
+  });
 };
 
-const closeBigPicture = () => {
-  closeElement(bigPicture);
-  modalOpenRemove();
-};
-
-closeButton.addEventListener('click', closeBigPicture);
-document.addEventListener('keydown', (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    closeBigPicture();
-  }
-});
-picturesContainer.addEventListener('click', (evt) => {
-  const currentThumbnailPicture = evt.target.closest('.picture');
-  if (currentThumbnailPicture){
-    openBigPicture(currentThumbnailPicture.dataset.pictureId);
-  }
-});
+export {openBigPicture};
