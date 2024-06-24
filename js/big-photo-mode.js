@@ -2,7 +2,7 @@ import {closeElement, showElement, isEscapeKey, modalOpenAdd, modalOpenRemove} f
 import {similarPhotos} from './data.js';
 
 const bigPicture = document.querySelector('.big-picture');
-const closeButton = document.querySelector('.big-picture__cancel');
+const bigPictureCloseButton = document.querySelector('.big-picture__cancel');
 const bigPictureImg = bigPicture.querySelector('.big-picture__img img');
 const socialComments = bigPicture.querySelector('.social__comments');
 const socialCommentTemplate = socialComments.querySelector('.social__comment');
@@ -80,7 +80,7 @@ function closeBigPicture(evt) {
   document.removeEventListener('keydown', onEscKeyDown);
 }
 
-closeButton.addEventListener('click', closeBigPicture);
+bigPictureCloseButton.addEventListener('click', closeBigPicture);
 
 document.querySelector('.comments-loader').addEventListener('click', showMoreComments);
 
