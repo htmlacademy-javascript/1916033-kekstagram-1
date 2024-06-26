@@ -1,4 +1,4 @@
-import {closeElement, showElement,isEscapeKey, modalOpenAdd, modalOpenRemove} from './util.js';
+import {hideElement, showElement,isEscapeKey, modalOpenAdd, modalOpenRemove} from './util.js';
 const SCALE_STEP = 25;
 const SCALE_MIN = 25;
 const SCALE_MAX = 100;
@@ -66,7 +66,7 @@ const closeImgUpload = (evt) => {
   if (evt) {
     evt.preventDefault();
   }
-  closeElement(imgUploadOverlayElement);
+  hideElement(imgUploadOverlayElement);
   modalOpenRemove();
   document.removeEventListener('keydown', onEscKeyDown);
 };

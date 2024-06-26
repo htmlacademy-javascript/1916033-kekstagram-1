@@ -39,6 +39,7 @@ const createCount = () => {
 const idComment = createCount();
 const idPhoto = createCount();
 const unicUrl = createCount();
+
 const createComment = () => ({
   id: idComment(),
   avatar: `img/avatar-${getRandomInteger(RandomAvatars.MIN, RandomAvatars.MAX)}.svg`,
@@ -51,7 +52,7 @@ const createUserPhoto = () => ({
   description: 'Классно получилось?',
   likes: getRandomInteger(Likes.MIN, Likes.MAX),
   comments:
-  Array.from({length: getRandomInteger(QuantityComments.MIN, QuantityComments.MAX)}, createComment)
+    Array.from({length: getRandomInteger(QuantityComments.MIN, QuantityComments.MAX)}, createComment)
 });
 const similarPhotos = Array.from({length: SIMILAR_PHOTOS_COUNT}, createUserPhoto);
 export {similarPhotos};

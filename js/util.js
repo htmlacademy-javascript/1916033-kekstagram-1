@@ -14,14 +14,14 @@ const modalOpenAdd = () => {
 const modalOpenRemove = () => {
   body.classList.remove('modal-open');
 };
-const closeElement = (element) => element.classList.add('hidden');
+const hideElement = (element) => element.classList.add('hidden');
 const showElement = (element) => element.classList.remove('hidden');
 export {
   getRandomInteger,
   getRandomArrayElement,
   isEscapeKey,
   isEnterKey,
-  closeElement,
+  hideElement,
   showElement,
   modalOpenAdd,
   modalOpenRemove
