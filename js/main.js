@@ -1,4 +1,3 @@
 import './big-photo-mode.js';
-import {generateSmallPhoto} from './add-thumbnails.js';
-generateSmallPhoto();
-
+import './validation.js';
+import './img-upload.js';
