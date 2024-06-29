@@ -1,4 +1,4 @@
-import {hideElement, showElement,isEscapeKey, modalOpenAdd, modalOpenRemove} from './util.js';
+import {closeElement, showElement,isEscapeKey, modalOpenAdd, modalOpenRemove} from './util.js';
 import {picturesContainer} from './add-thumbnails.js';
 import {similarPhotos} from './data.js';
 const COUNT_STEP = 5;
@@ -71,7 +71,7 @@ const closeBigPicture = (evt) => {
   if (evt) {
     evt.preventDefault();
   }
-  hideElement(bigPictureElement);
+  closeElement(bigPictureElement);
   modalOpenRemove();
   document.removeEventListener('keydown', onEscKeyDown);
 };
