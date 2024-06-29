@@ -128,10 +128,7 @@ const resetForm = () => {
   imgUploadPreviewElement.style.transform = 'scale(1)';
   document.querySelector('.effects__radio[value="none"]').checked = true;
   imgUploadPreviewElement.style.filter = '';
-  if (effectLevelSlider.noUiSlider) {
-    effectLevelSlider.noUiSlider.set(filters['none'].start);
-  }
-  closeElement(imgUploadEffectLevel);
+  effectLevelSlider.value = 'none';
 
 };
 
