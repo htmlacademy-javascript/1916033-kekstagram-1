@@ -1,4 +1,4 @@
-import {bodyElement, dataErrorTemplate} from './search-elements';
+import {bodyElement, dataErrorTemplate} from './search-elements.js';
 
 const TIME_OUT = 5000;
 

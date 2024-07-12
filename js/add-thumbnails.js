@@ -1,4 +1,4 @@
-import {picturesContainerElement, gallareyTemplate} from './search-elements';
+import {picturesContainerElement, gallareyTemplate} from './search-elements.js';
 
 const addThumbnails = (({id, url, likes, comments}) => {
   const thumbnail = gallareyTemplate.cloneNode(true);

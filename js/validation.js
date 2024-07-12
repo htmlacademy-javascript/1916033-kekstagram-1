@@ -1,4 +1,4 @@
-import {imgUploadFormElement, textHashtagsElement, textCommentsElement} from './search-elements';
+import {imgUploadFormElement, textHashtagsElement, textCommentsElement} from './search-elements.js';
 
 const MAX_HASHTAGS = 5;
 const MAX_SYMBOLS = 20;

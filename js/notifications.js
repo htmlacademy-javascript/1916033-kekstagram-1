@@ -1,5 +1,5 @@
-import {bodyElement} from './search-elements';
-import {isEscapeKey} from './util';
+import {bodyElement} from './search-elements.js';
+import {isEscapeKey} from './util.js';
 
 const closeNotification = (evt) => {
   evt.stopPropagation();
