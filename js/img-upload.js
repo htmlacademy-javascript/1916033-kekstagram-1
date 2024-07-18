@@ -1,26 +1,13 @@
 import {closeElement, showElement,isEscapeKey, modalOpenAdd, modalOpenRemove} from './util.js';
+import * as SE from './search-elements.js';
+import {pristine} from './validation.js';
 
 const SCALE_STEP = 25;
 const SCALE_MIN = 25;
 const SCALE_MAX = 100;
 const PERCENT = '%';
 
-const imgUploadElement = document.querySelector('.img-upload');
-const imgUploadInputElement = imgUploadElement.querySelector('.img-upload__input');
-const imgUploadOverlayElement = imgUploadElement.querySelector('.img-upload__overlay');
-const imgUploadPreviewContainerElement = imgUploadOverlayElement.querySelector('.img-upload__preview-container');
-const imgUploadPreviewElement = imgUploadPreviewContainerElement.querySelector('.img-upload__preview');
-const previewCloseButtonElement = imgUploadPreviewContainerElement.querySelector('.img-upload__cancel');
-const scaleControlSmaller = imgUploadPreviewContainerElement.querySelector('.scale__control--smaller');
-const scaleControlBigger = imgUploadPreviewContainerElement.querySelector('.scale__control--bigger');
-const scaleControlValue = imgUploadPreviewContainerElement.querySelector('.scale__control--value');
-const imgUploadEffectLevel = imgUploadPreviewContainerElement.querySelector('.img-upload__effect-level');
-const effectLevelValue = imgUploadEffectLevel.querySelector('.effect-level__value');
-const imgUploadEffects = imgUploadOverlayElement.querySelector('.img-upload__effects');
-const effectLevelSlider = imgUploadEffectLevel.querySelector('.effect-level__slider');
-const imgUploadForm = imgUploadElement.querySelector('.img-upload__form');
-
-noUiSlider.create (effectLevelSlider, {
+noUiSlider.create (SE.effectLevelSliderElement, {
   range: {
     min: 0,
     max:100
@@ -66,22 +53,24 @@ const filters = {
     apply: (value) => `brightness(${value})`
   }
 };
-
+const resetInputFile = () => {
+  SE.imgUploadInputElement.value = '';
+};
 
 const onScaleDownClick = () => {
-  let currentValue = parseInt(scaleControlValue.value, 10);
+  let currentValue = parseInt(SE.scaleControlValueElement.value, 10);
   if (currentValue > SCALE_MIN) {
     currentValue -= SCALE_STEP;
-    scaleControlValue.value = currentValue + PERCENT;
-    imgUploadPreviewElement.style.transform = `scale(${currentValue / 100})`;
+    SE.scaleControlValueElement.value = currentValue + PERCENT;
+    SE.imgUploadPreviewElement.style.transform = `scale(${currentValue / 100})`;
   }
 };
 const onScaleUpClick = () => {
-  let currentValue = parseInt(scaleControlValue.value, 10);
+  let currentValue = parseInt(SE.scaleControlValueElement.value, 10);
   if (currentValue < SCALE_MAX) {
     currentValue += SCALE_STEP;
-    scaleControlValue.value = currentValue + PERCENT;
-    imgUploadPreviewElement.style.transform = `scale(${currentValue / 100})`;
+    SE.scaleControlValueElement.value = currentValue + PERCENT;
+    SE.imgUploadPreviewElement.style.transform = `scale(${currentValue / 100})`;
   }
 };
 
@@ -89,15 +78,15 @@ const onUpdateSliderChange = (evt) => {
   const effect = evt.target.value;
   const isNoneEffect = effect === 'none';
   if (isNoneEffect) {
-    closeElement(imgUploadEffectLevel);
+    closeElement(SE.imgUploadEffectLevelElement);
   } else {
-    showElement(imgUploadEffectLevel);
+    showElement(SE.imgUploadEffectLevelElement);
   }
 
   const {range, start, step, apply} = filters[effect];
 
-  if (!effectLevelSlider.noUiSlider) {
-    noUiSlider.create(effectLevelSlider, {
+  if (!SE.effectLevelSliderElement.noUiSlider) {
+    noUiSlider.create(SE.effectLevelSliderElement, {
       start,
       range,
       step,
@@ -105,60 +94,59 @@ const onUpdateSliderChange = (evt) => {
     });
   } else {
 
-    effectLevelSlider.noUiSlider.updateOptions({
+    SE.effectLevelSliderElement.noUiSlider.updateOptions({
       range,
       start: start,
       step,
     });
   }
 
-  effectLevelSlider.noUiSlider.on('update', (values, handle) => {
+  SE.effectLevelSliderElement.noUiSlider.on('update', (values, handle) => {
     const value = parseFloat(values[handle]);
-    imgUploadPreviewElement.style.filter = apply(value);
-    effectLevelValue.value = value.toFixed(1);
+    SE.imgUploadPreviewElement.style.filter = apply(value);
+    SE.effectLevelValueElement.value = value.toFixed(1);
   });
-};
-const resetInputFile = () => {
-  imgUploadInputElement.value = '';
 };
 
 const resetForm = () => {
-  imgUploadForm.reset();
-  scaleControlValue.value = SCALE_MAX + PERCENT;
-  imgUploadPreviewElement.style.transform = 'scale(1)';
+  SE.imgUploadFormElement.reset();
+  pristine.reset();
+  SE.scaleControlValueElement.value = SCALE_MAX + PERCENT;
+  SE.imgUploadPreviewElement.style.transform = 'scale(1)';
   document.querySelector('.effects__radio[value="none"]').checked = true;
-  imgUploadPreviewElement.style.filter = '';
-  effectLevelSlider.value = 'none';
-
+  SE.imgUploadPreviewElement.style.filter = '';
+  SE.effectLevelSliderElement.value = 'none';
 };
 
 const onUploadChange = () => {
-  resetForm();
-  showElement(imgUploadOverlayElement);
+  showElement(SE.imgUploadOverlayElement);
+  closeElement(SE.imgUploadEffectLevelElement);
   modalOpenAdd();
   document.addEventListener('keydown', onEscKeyDown);
 };
-const onUploadCloseClick = (evt) => {
-  if (evt) {
-    evt.preventDefault();
-  }
+
+const onUploadCloseClick = () => {
+  closeElement(SE.imgUploadOverlayElement);
+  resetForm();
   resetInputFile();
-  closeElement(imgUploadOverlayElement);
   modalOpenRemove();
   document.removeEventListener('keydown', onEscKeyDown);
 };
+
 function onEscKeyDown (evt) {
   if (isEscapeKey(evt)) {
     onUploadCloseClick();
   }
 }
-const initaddEventListeners = () => {
-  closeElement(imgUploadEffectLevel);
-  imgUploadInputElement.addEventListener('change', onUploadChange);
-  previewCloseButtonElement.addEventListener('click',onUploadCloseClick);
-  scaleControlSmaller.addEventListener('click', onScaleDownClick);
-  scaleControlBigger.addEventListener('click', onScaleUpClick);
-  imgUploadEffects.addEventListener('change', onUpdateSliderChange);
+
+const initUploadEvents = () => {
+  SE.imgUploadInputElement.addEventListener('change', onUploadChange);
+  SE.previewCloseButtonElement.addEventListener('click',onUploadCloseClick);
+  SE.scaleControlSmallerElement.addEventListener('click', onScaleDownClick);
+  SE.scaleControlBiggerElement.addEventListener('click', onScaleUpClick);
+  SE.imgUploadEffectsElement.addEventListener('change', onUpdateSliderChange);
 };
 
-initaddEventListeners();
+initUploadEvents();
+
+export {onUploadCloseClick};
