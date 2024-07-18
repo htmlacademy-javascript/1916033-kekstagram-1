@@ -1,7 +1,5 @@
 import {closeElement, showElement,isEscapeKey, modalOpenAdd, modalOpenRemove} from './util.js';
-import {imgUploadInputElement, imgUploadOverlayElement, imgUploadPreviewElement, previewCloseButtonElement, scaleControlSmallerElement,
-  scaleControlBiggerElement, scaleControlValueElement, effectLevelValueElement, imgUploadEffectsElement, effectLevelSliderElement,
-  imgUploadEffectLevelElement, imgUploadFormElement} from './search-elements.js';
+import * as SE from './search-elements.js';
 import {pristine} from './validation.js';
 
 const SCALE_STEP = 25;
@@ -9,7 +7,7 @@ const SCALE_MIN = 25;
 const SCALE_MAX = 100;
 const PERCENT = '%';
 
-noUiSlider.create (effectLevelSliderElement, {
+noUiSlider.create (SE.effectLevelSliderElement, {
   range: {
     min: 0,
     max:100
@@ -56,23 +54,23 @@ const filters = {
   }
 };
 const resetInputFile = () => {
-  imgUploadInputElement.value = '';
+  SE.imgUploadInputElement.value = '';
 };
 
 const onScaleDownClick = () => {
-  let currentValue = parseInt(scaleControlValueElement.value, 10);
+  let currentValue = parseInt(SE.scaleControlValueElement.value, 10);
   if (currentValue > SCALE_MIN) {
     currentValue -= SCALE_STEP;
-    scaleControlValueElement.value = currentValue + PERCENT;
-    imgUploadPreviewElement.style.transform = `scale(${currentValue / 100})`;
+    SE.scaleControlValueElement.value = currentValue + PERCENT;
+    SE.imgUploadPreviewElement.style.transform = `scale(${currentValue / 100})`;
   }
 };
 const onScaleUpClick = () => {
-  let currentValue = parseInt(scaleControlValueElement.value, 10);
+  let currentValue = parseInt(SE.scaleControlValueElement.value, 10);
   if (currentValue < SCALE_MAX) {
     currentValue += SCALE_STEP;
-    scaleControlValueElement.value = currentValue + PERCENT;
-    imgUploadPreviewElement.style.transform = `scale(${currentValue / 100})`;
+    SE.scaleControlValueElement.value = currentValue + PERCENT;
+    SE.imgUploadPreviewElement.style.transform = `scale(${currentValue / 100})`;
   }
 };
 
@@ -80,15 +78,15 @@ const onUpdateSliderChange = (evt) => {
   const effect = evt.target.value;
   const isNoneEffect = effect === 'none';
   if (isNoneEffect) {
-    closeElement(imgUploadEffectLevelElement);
+    closeElement(SE.imgUploadEffectLevelElement);
   } else {
-    showElement(imgUploadEffectLevelElement);
+    showElement(SE.imgUploadEffectLevelElement);
   }
 
   const {range, start, step, apply} = filters[effect];
 
-  if (!effectLevelSliderElement.noUiSlider) {
-    noUiSlider.create(effectLevelSliderElement, {
+  if (!SE.effectLevelSliderElement.noUiSlider) {
+    noUiSlider.create(SE.effectLevelSliderElement, {
       start,
       range,
       step,
@@ -96,39 +94,39 @@ const onUpdateSliderChange = (evt) => {
     });
   } else {
 
-    effectLevelSliderElement.noUiSlider.updateOptions({
+    SE.effectLevelSliderElement.noUiSlider.updateOptions({
       range,
       start: start,
       step,
     });
   }
 
-  effectLevelSliderElement.noUiSlider.on('update', (values, handle) => {
+  SE.effectLevelSliderElement.noUiSlider.on('update', (values, handle) => {
     const value = parseFloat(values[handle]);
-    imgUploadPreviewElement.style.filter = apply(value);
-    effectLevelValueElement.value = value.toFixed(1);
+    SE.imgUploadPreviewElement.style.filter = apply(value);
+    SE.effectLevelValueElement.value = value.toFixed(1);
   });
 };
 
 const resetForm = () => {
-  imgUploadFormElement.reset();
+  SE.imgUploadFormElement.reset();
   pristine.reset();
-  scaleControlValueElement.value = SCALE_MAX + PERCENT;
-  imgUploadPreviewElement.style.transform = 'scale(1)';
+  SE.scaleControlValueElement.value = SCALE_MAX + PERCENT;
+  SE.imgUploadPreviewElement.style.transform = 'scale(1)';
   document.querySelector('.effects__radio[value="none"]').checked = true;
-  imgUploadPreviewElement.style.filter = '';
-  effectLevelSliderElement.value = 'none';
+  SE.imgUploadPreviewElement.style.filter = '';
+  SE.effectLevelSliderElement.value = 'none';
 };
 
 const onUploadChange = () => {
-  showElement(imgUploadOverlayElement);
-  closeElement(imgUploadEffectLevelElement);
+  showElement(SE.imgUploadOverlayElement);
+  closeElement(SE.imgUploadEffectLevelElement);
   modalOpenAdd();
   document.addEventListener('keydown', onEscKeyDown);
 };
 
 const onUploadCloseClick = () => {
-  closeElement(imgUploadOverlayElement);
+  closeElement(SE.imgUploadOverlayElement);
   resetForm();
   resetInputFile();
   modalOpenRemove();
@@ -142,11 +140,11 @@ function onEscKeyDown (evt) {
 }
 
 const initUploadEvents = () => {
-  imgUploadInputElement.addEventListener('change', onUploadChange);
-  previewCloseButtonElement.addEventListener('click',onUploadCloseClick);
-  scaleControlSmallerElement.addEventListener('click', onScaleDownClick);
-  scaleControlBiggerElement.addEventListener('click', onScaleUpClick);
-  imgUploadEffectsElement.addEventListener('change', onUpdateSliderChange);
+  SE.imgUploadInputElement.addEventListener('change', onUploadChange);
+  SE.previewCloseButtonElement.addEventListener('click',onUploadCloseClick);
+  SE.scaleControlSmallerElement.addEventListener('click', onScaleDownClick);
+  SE.scaleControlBiggerElement.addEventListener('click', onScaleUpClick);
+  SE.imgUploadEffectsElement.addEventListener('change', onUpdateSliderChange);
 };
 
 initUploadEvents();
