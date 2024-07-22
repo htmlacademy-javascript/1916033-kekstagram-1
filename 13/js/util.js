@@ -23,7 +23,7 @@ export const showErrorMessage = () => {
 };
 
 export const opacityOne = () => {
-  imgFiltersInactiveElement.style.opacity = '1';
+  imgFiltersInactiveElement.classList.add('active');
 };
 
 export const debounce = (callback, timeoutDelay = 500) => {
