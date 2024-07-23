@@ -38,3 +38,6 @@ export const templateError = bodyElement.querySelector('#error').content;
 
 export const textHashtagsElement = imgUploadFormElement.querySelector('.text__hashtags');
 export const textCommentsElement = imgUploadFormElement.querySelector('.text__description');
+
+export const imgFiltersInactiveElement = document.querySelector('.img-filters--inactive');
+export const imgFiltersElement = document.querySelector('.img-filters');
