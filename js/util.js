@@ -4,10 +4,10 @@ const TIME_OUT = 5000;
 
 export const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export const modalOpenAdd = () => {
+export const addModalOpen = () => {
   bodyElement.classList.add('modal-open');
 };
-export const modalOpenRemove = () => {
+export const removeModalOpen = () => {
   bodyElement.classList.remove('modal-open');
 };
 export const closeElement = (element) => element.classList.add('hidden');
@@ -22,7 +22,7 @@ export const showErrorMessage = () => {
   }, TIME_OUT);
 };
 
-export const opacityOne = () => {
+export const makeOpacityOne = () => {
   imgFiltersInactiveElement.classList.add('active');
 };
 

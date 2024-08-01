@@ -12,6 +12,7 @@ export const onCommentsLoaderElementClick = bigPictureElement.querySelector('.co
 export const commentShownCountElement = bigPictureElement.querySelector('.social__comment-shown-count');
 export const commentTotalCountElement = bigPictureElement.querySelector('.social__comment-total-count');
 export const commentsLoaderElement = bigPictureElement.querySelector('.comments-loader');
+export const socialFooterTextElement = bigPictureElement.querySelector('.social__footer-text');
 
 
 export const imgUploadElement = document.querySelector('.img-upload');
@@ -41,3 +42,6 @@ export const textCommentsElement = imgUploadFormElement.querySelector('.text__de
 
 export const imgFiltersInactiveElement = document.querySelector('.img-filters--inactive');
 export const imgFiltersElement = document.querySelector('.img-filters');
+
+export const imgPreviewElement = imgUploadPreviewElement.querySelector('img');
+export const effectsPreviewElement = imgUploadEffectsElement.querySelectorAll('.effects__preview');

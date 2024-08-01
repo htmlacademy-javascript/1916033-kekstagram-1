@@ -1,4 +1,4 @@
-import {closeElement, showElement,isEscapeKey, modalOpenAdd, modalOpenRemove} from './util.js';
+import {closeElement, showElement,isEscapeKey, addModalOpen, removeModalOpen} from './util.js';
 import * as SE from './search-elements.js';
 
 const COUNT_STEP = 5;
@@ -40,7 +40,7 @@ const addComments = (comments) => {
   }
 };
 
-const showMoreComments = () => {
+const onCommentsLoaderClick = () => {
   addComments(globalComments);
 };
 
@@ -50,24 +50,25 @@ const openBigPicture = (pictureId) => {
   const currentPhoto = newPhotos.find((photo) => photo.id === Number(pictureId));
   updateBigPictureInfo(currentPhoto);
   globalComments = currentPhoto.comments;
-  SE.commentTotalCountElement.textContent = globalComments.length;
+  SE.commentTotalCountElement.textContent = globalComments.length.toString();
   addComments(globalComments);
   showElement(SE.bigPictureElement);
-  modalOpenAdd();
+  addModalOpen();
   document.addEventListener('keydown', onEscKeyDown);
 };
 
-const closeBigPicture = (evt) => {
+const onCloseButtonClick = (evt) => {
   if (evt) {
     evt.preventDefault();
   }
+  SE.socialFooterTextElement.value = '';
   closeElement(SE.bigPictureElement);
-  modalOpenRemove();
+  removeModalOpen();
   document.removeEventListener('keydown', onEscKeyDown);
 };
 function onEscKeyDown (evt) {
   if (isEscapeKey(evt)) {
-    closeBigPicture();
+    onCloseButtonClick();
   }
 }
 
@@ -77,14 +78,14 @@ const onPicturesContainerClick = (evt) => {
     openBigPicture(currentThumbnailPicture.dataset.pictureId);
   }
 };
-const initaddEventListeners = () => {
+const initEventListeners = () => {
   SE.onPicturesContainerElementClick.addEventListener('click', onPicturesContainerClick);
-  SE.onBigPictureCloseButtonElementClick.addEventListener('click', closeBigPicture);
-  SE.commentsLoaderElement.addEventListener('click', showMoreComments);
+  SE.onBigPictureCloseButtonElementClick.addEventListener('click', onCloseButtonClick);
+  SE.commentsLoaderElement.addEventListener('click', onCommentsLoaderClick);
 };
 const initializeGallery = (photos) => {
   newPhotos = photos;
-  initaddEventListeners();
+  initEventListeners();
 };
 
 export {initializeGallery};
