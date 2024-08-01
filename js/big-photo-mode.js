@@ -80,7 +80,7 @@ const onPicturesContainerClick = (evt) => {
 };
 const initEventListeners = () => {
   SE.onPicturesContainerElementClick.addEventListener('click', onPicturesContainerClick);
-  SE.onBigPictureCloseButtonElement.addEventListener('click', onCloseButtonClick);
+  SE.onBigPictureCloseButtonElementClick.addEventListener('click', onCloseButtonClick);
   SE.commentsLoaderElement.addEventListener('click', onCommentsLoaderClick);
 };
 const initializeGallery = (photos) => {
