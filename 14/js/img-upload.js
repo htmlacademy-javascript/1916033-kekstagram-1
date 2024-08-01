@@ -130,7 +130,7 @@ const onUploadChange = () => {
   document.addEventListener('keydown', onEscKeyDown);
 };
 
-const onUploadCloseClick = () => {
+export const onUploadCloseClick = () => {
   closeElement(SE.imgUploadOverlayElement);
   resetForm();
   resetInputFile();
@@ -155,5 +155,3 @@ const initUploadEvents = () => {
 createNoUiSlider();
 initUploadEvents();
 
-
-export {onUploadCloseClick};
