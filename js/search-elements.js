@@ -1,17 +1,18 @@
 export const gallareyTemplate = document.querySelector('#picture').content.querySelector('.picture');
-export const onPicturesContainerElementClick = document.querySelector('.pictures');
+export const onPicturesContainerClick = document.querySelector('.pictures');
 
 export const bigPictureElement = document.querySelector('.big-picture');
-export const onBigPictureCloseButtonElementClick = bigPictureElement.querySelector('.big-picture__cancel');
+export const onBigPictureCloseClick = bigPictureElement.querySelector('.big-picture__cancel');
 export const bigPictureImgElement = bigPictureElement.querySelector('.big-picture__img img');
 export const socialCommentsElement = bigPictureElement.querySelector('.social__comments');
 export const socialCommentTemplateElement = socialCommentsElement.querySelector('.social__comment');
 export const likesCountElement = bigPictureElement.querySelector('.likes-count');
 export const socialCaptionElement = bigPictureElement.querySelector('.social__caption');
-export const onCommentsLoaderElementClick = bigPictureElement.querySelector('.comments-loader');
+export const onCommentsLoaderClick = bigPictureElement.querySelector('.comments-loader');
 export const commentShownCountElement = bigPictureElement.querySelector('.social__comment-shown-count');
 export const commentTotalCountElement = bigPictureElement.querySelector('.social__comment-total-count');
 export const commentsLoaderElement = bigPictureElement.querySelector('.comments-loader');
+export const socialFooterTextElement = bigPictureElement.querySelector('.social__footer-text');
 
 
 export const imgUploadElement = document.querySelector('.img-upload');
@@ -41,3 +42,6 @@ export const textCommentsElement = imgUploadFormElement.querySelector('.text__de
 
 export const imgFiltersInactiveElement = document.querySelector('.img-filters--inactive');
 export const imgFiltersElement = document.querySelector('.img-filters');
+
+export const imgPreviewElement = imgUploadPreviewElement.querySelector('img');
+export const effectsPreviewElement = imgUploadEffectsElement.querySelectorAll('.effects__preview');

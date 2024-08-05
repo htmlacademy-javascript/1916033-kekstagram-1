@@ -1,4 +1,4 @@
-import {closeElement, showElement,isEscapeKey, modalOpenAdd, modalOpenRemove} from './util.js';
+import {closeElement, showElement,isEscapeKey, addModalOpen, removeModalOpen} from './util.js';
 import * as SE from './search-elements.js';
 
 const COUNT_STEP = 5;
@@ -9,10 +9,10 @@ let globalComments = [];
 
 
 const hideLoadMoreButton = () => {
-  SE.onCommentsLoaderElementClick.classList.add('hidden');
+  SE.onCommentsLoaderClick.classList.add('hidden');
 };
 const showLoadMoreButton = () => {
-  SE.onCommentsLoaderElementClick.classList.remove('hidden');
+  SE.onCommentsLoaderClick.classList.remove('hidden');
 };
 const updateBigPictureInfo = (photo) => {
   SE.bigPictureImgElement.src = photo.url;
@@ -40,7 +40,7 @@ const addComments = (comments) => {
   }
 };
 
-const showMoreComments = () => {
+const loadComments = () => {
   addComments(globalComments);
 };
 
@@ -50,41 +50,42 @@ const openBigPicture = (pictureId) => {
   const currentPhoto = newPhotos.find((photo) => photo.id === Number(pictureId));
   updateBigPictureInfo(currentPhoto);
   globalComments = currentPhoto.comments;
-  SE.commentTotalCountElement.textContent = globalComments.length;
+  SE.commentTotalCountElement.textContent = globalComments.length.toString();
   addComments(globalComments);
   showElement(SE.bigPictureElement);
-  modalOpenAdd();
+  addModalOpen();
   document.addEventListener('keydown', onEscKeyDown);
 };
 
-const closeBigPicture = (evt) => {
+const closeButtonClick = (evt) => {
   if (evt) {
     evt.preventDefault();
   }
+  SE.socialFooterTextElement.value = '';
   closeElement(SE.bigPictureElement);
-  modalOpenRemove();
+  removeModalOpen();
   document.removeEventListener('keydown', onEscKeyDown);
 };
 function onEscKeyDown (evt) {
   if (isEscapeKey(evt)) {
-    closeBigPicture();
+    closeButtonClick();
   }
 }
 
-const onPicturesContainerClick = (evt) => {
+const picturesContainerClick = (evt) => {
   const currentThumbnailPicture = evt.target.closest('.picture');
   if (currentThumbnailPicture){
     openBigPicture(currentThumbnailPicture.dataset.pictureId);
   }
 };
-const initaddEventListeners = () => {
-  SE.onPicturesContainerElementClick.addEventListener('click', onPicturesContainerClick);
-  SE.onBigPictureCloseButtonElementClick.addEventListener('click', closeBigPicture);
-  SE.commentsLoaderElement.addEventListener('click', showMoreComments);
+const initializeEventListeners = () => {
+  SE.onPicturesContainerClick.addEventListener('click', picturesContainerClick);
+  SE.onBigPictureCloseClick.addEventListener('click', closeButtonClick);
+  SE.commentsLoaderElement.addEventListener('click', loadComments);
 };
 const initializeGallery = (photos) => {
   newPhotos = photos;
-  initaddEventListeners();
+  initializeEventListeners();
 };
 
 export {initializeGallery};
