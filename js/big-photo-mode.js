@@ -9,10 +9,10 @@ let globalComments = [];
 
 
 const hideLoadMoreButton = () => {
-  SE.onCommentsLoaderElementClick.classList.add('hidden');
+  SE.onCommentsLoaderClick.classList.add('hidden');
 };
 const showLoadMoreButton = () => {
-  SE.onCommentsLoaderElementClick.classList.remove('hidden');
+  SE.onCommentsLoaderClick.classList.remove('hidden');
 };
 const updateBigPictureInfo = (photo) => {
   SE.bigPictureImgElement.src = photo.url;
@@ -40,7 +40,7 @@ const addComments = (comments) => {
   }
 };
 
-const onCommentsLoaderClick = () => {
+const loadComments = () => {
   addComments(globalComments);
 };
 
@@ -57,7 +57,7 @@ const openBigPicture = (pictureId) => {
   document.addEventListener('keydown', onEscKeyDown);
 };
 
-const onCloseButtonClick = (evt) => {
+const closeButtonClick = (evt) => {
   if (evt) {
     evt.preventDefault();
   }
@@ -68,24 +68,24 @@ const onCloseButtonClick = (evt) => {
 };
 function onEscKeyDown (evt) {
   if (isEscapeKey(evt)) {
-    onCloseButtonClick();
+    closeButtonClick();
   }
 }
 
-const onPicturesContainerClick = (evt) => {
+const picturesContainerClick = (evt) => {
   const currentThumbnailPicture = evt.target.closest('.picture');
   if (currentThumbnailPicture){
     openBigPicture(currentThumbnailPicture.dataset.pictureId);
   }
 };
-const initEventListeners = () => {
-  SE.onPicturesContainerElementClick.addEventListener('click', onPicturesContainerClick);
-  SE.onBigPictureCloseButtonElementClick.addEventListener('click', onCloseButtonClick);
-  SE.commentsLoaderElement.addEventListener('click', onCommentsLoaderClick);
+const initializeEventListeners = () => {
+  SE.onPicturesContainerClick.addEventListener('click', picturesContainerClick);
+  SE.onBigPictureCloseClick.addEventListener('click', closeButtonClick);
+  SE.commentsLoaderElement.addEventListener('click', loadComments);
 };
 const initializeGallery = (photos) => {
   newPhotos = photos;
-  initEventListeners();
+  initializeEventListeners();
 };
 
 export {initializeGallery};

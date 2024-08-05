@@ -1,5 +1,5 @@
-import {imgFiltersElement, onPicturesContainerElementClick} from './search-elements.js';
-import {debounce} from './util.js';
+import {imgFiltersElement, onPicturesContainerClick} from './search-elements.js';
+import {debouncedFunction} from './util.js';
 import {addThumbnails,} from './add-thumbnails.js';
 const RANDOM_COUNT = 10;
 const FILTERS_BUTTON_ACTIVE = 'img-filters__button--active';
@@ -17,11 +17,11 @@ const Filters = {
 let currentFilter = 'filter-default';
 
 const updateGallery = (filteredPhotos) => {
-  const photoElements = onPicturesContainerElementClick.querySelectorAll('.picture');
+  const photoElements = onPicturesContainerClick.querySelectorAll('.picture');
   photoElements.forEach((element) => element.remove());
   filteredPhotos.forEach(addThumbnails);
 };
-const debouncedUpdateGallery = debounce(updateGallery);
+const debouncedUpdateGallery = debouncedFunction(updateGallery);
 const useFilters = () => {
   let filterPhotos = [];
   if (currentFilter === Filters.DEFAULT) {
@@ -34,7 +34,7 @@ const useFilters = () => {
   debouncedUpdateGallery(filterPhotos);
 };
 
-const onFilterChange = (evt) => {
+const filterChanged = (evt) => {
   const targetButton = evt.target;
   if (!targetButton.matches('button')) {
     return;
@@ -48,9 +48,9 @@ const onFilterChange = (evt) => {
   useFilters();
 };
 
-const initFiltersClick = (photosData) => {
-  imgFiltersElement.addEventListener('click', onFilterChange);
+export const initializeFiltersClick = (photosData) => {
+  imgFiltersElement.addEventListener('click', filterChanged);
   photos = photosData;
 };
 
-export {initFiltersClick};
+

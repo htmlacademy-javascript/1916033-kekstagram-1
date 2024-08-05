@@ -3,7 +3,7 @@ import {isEscapeKey} from './util.js';
 
 const getExistingElement = () => document.querySelector('.success') || document.querySelector('.error');
 
-const onCloseNotificationClick = (evt) => {
+const closeNotificationClick = (evt) => {
   getExistingElement();
   const closeButton = getExistingElement().querySelector('button');
   if (evt.target === getExistingElement() || evt.target === closeButton){
@@ -11,7 +11,7 @@ const onCloseNotificationClick = (evt) => {
     removeNotificationListeners();
   }
 };
-const onCloseNotificationKeydown = (evt) => {
+const closeNotificationKeydown = (evt) => {
   evt.stopPropagation();
   getExistingElement();
   if (isEscapeKey(evt)) {
@@ -21,8 +21,8 @@ const onCloseNotificationKeydown = (evt) => {
 };
 
 function removeNotificationListeners () {
-  bodyElement.removeEventListener('click', onCloseNotificationClick);
-  bodyElement.removeEventListener('keydown', onCloseNotificationKeydown);
+  bodyElement.removeEventListener('click', closeNotificationClick);
+  bodyElement.removeEventListener('keydown', closeNotificationKeydown);
 }
 
 const appendNotification = (template, trigger = null) => {
@@ -31,8 +31,8 @@ const appendNotification = (template, trigger = null) => {
   }
   const notificationNode = template.cloneNode(true);
   bodyElement.append(notificationNode);
-  bodyElement.addEventListener('click', onCloseNotificationClick);
-  bodyElement.addEventListener('keydown', onCloseNotificationKeydown);
+  bodyElement.addEventListener('click', closeNotificationClick);
+  bodyElement.addEventListener('keydown', closeNotificationKeydown);
 };
 
 export {appendNotification};

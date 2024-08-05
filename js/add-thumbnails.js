@@ -1,4 +1,4 @@
-import {onPicturesContainerElementClick, gallareyTemplate} from './search-elements.js';
+import {onPicturesContainerClick, gallareyTemplate} from './search-elements.js';
 
 const addThumbnails = (({id, url, description, likes, comments}) => {
   const thumbnail = gallareyTemplate.cloneNode(true);
@@ -7,7 +7,7 @@ const addThumbnails = (({id, url, description, likes, comments}) => {
   thumbnail.querySelector('.picture__img').alt = description;
   thumbnail.querySelector('.picture__likes').textContent = likes;
   thumbnail.querySelector('.picture__comments').textContent = comments.length;
-  onPicturesContainerElementClick.appendChild(thumbnail);
+  onPicturesContainerClick.appendChild(thumbnail);
 });
 
 export{addThumbnails};
