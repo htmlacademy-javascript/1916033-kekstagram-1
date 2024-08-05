@@ -60,7 +60,7 @@ const resetInputFile = () => {
   SE.imgUploadInputElement.value = '';
 };
 
-const onScaleDownClick = () => {
+const scaleDownClick = () => {
   let currentValue = parseInt(SE.scaleControlValueElement.value, 10);
   if (currentValue > SCALE_MIN) {
     currentValue -= SCALE_STEP;
@@ -68,7 +68,7 @@ const onScaleDownClick = () => {
     SE.imgPreviewElement.style.transform = `scale(${currentValue / 100})`;
   }
 };
-const onScaleUpClick = () => {
+const scaleUpClick = () => {
   let currentValue = parseInt(SE.scaleControlValueElement.value, 10);
   if (currentValue < SCALE_MAX) {
     currentValue += SCALE_STEP;
@@ -77,7 +77,7 @@ const onScaleUpClick = () => {
   }
 };
 
-const onUpdateSliderChange = (evt) => {
+const updateSliderValue = (evt) => {
   const effect = evt.target.value;
   const isNoneEffect = effect === 'none';
   if (isNoneEffect) {
@@ -122,7 +122,7 @@ const resetForm = () => {
   SE.effectLevelSliderElement.value = 'none';
 };
 
-const onUploadChange = () => {
+const uploadFileChanged = () => {
   showElement(SE.imgUploadOverlayElement);
   closeElement(SE.imgUploadEffectLevelElement);
   appendPreviewPhoto();
@@ -130,7 +130,7 @@ const onUploadChange = () => {
   document.addEventListener('keydown', onEscKeyDown);
 };
 
-export const onUploadCloseClick = () => {
+export const uploadCloseClick = () => {
   closeElement(SE.imgUploadOverlayElement);
   resetForm();
   resetInputFile();
@@ -140,18 +140,18 @@ export const onUploadCloseClick = () => {
 
 function onEscKeyDown (evt) {
   if (isEscapeKey(evt)) {
-    onUploadCloseClick();
+    uploadCloseClick();
   }
 }
 
-const initUploadEvents = () => {
-  SE.imgUploadInputElement.addEventListener('change', onUploadChange);
-  SE.previewCloseButtonElement.addEventListener('click',onUploadCloseClick);
-  SE.scaleControlSmallerElement.addEventListener('click', onScaleDownClick);
-  SE.scaleControlBiggerElement.addEventListener('click', onScaleUpClick);
-  SE.imgUploadEffectsElement.addEventListener('change', onUpdateSliderChange);
+const initializeUploadEvents = () => {
+  SE.imgUploadInputElement.addEventListener('change', uploadFileChanged);
+  SE.previewCloseButtonElement.addEventListener('click',uploadCloseClick);
+  SE.scaleControlSmallerElement.addEventListener('click', scaleDownClick);
+  SE.scaleControlBiggerElement.addEventListener('click', scaleUpClick);
+  SE.imgUploadEffectsElement.addEventListener('change', updateSliderValue);
 };
 
 createNoUiSlider();
-initUploadEvents();
+initializeUploadEvents();
 

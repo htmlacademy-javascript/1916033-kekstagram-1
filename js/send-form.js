@@ -1,6 +1,6 @@
 import {sendData} from './api.js';
 import {appendNotification} from './notifications.js';
-import {onUploadCloseClick} from './img-upload.js';
+import {uploadCloseClick} from './img-upload.js';
 import {pristine, textCommentsElement, textHashtagsElement} from './validation.js';
 import {submitButtonElement, imgUploadFormElement} from './search-elements.js';
 import {templateSuccess, templateError} from './search-elements.js';
@@ -28,7 +28,7 @@ const sendFormData = async (formElement) => {
     textCommentsElement.value = textCommentsElement.value.trim().replaceAll(/\s+/g, ' ');
     try {
       await sendData(new FormData(formElement));
-      appendNotification(templateSuccess, () => onUploadCloseClick());
+      appendNotification(templateSuccess, () => uploadCloseClick());
     } catch {
       appendNotification(templateError);
     } finally {

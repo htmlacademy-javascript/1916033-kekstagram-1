@@ -2,6 +2,7 @@ import {imgUploadFormElement, textHashtagsElement, textCommentsElement} from './
 
 const MAX_HASHTAGS = 5;
 const MAX_SYMBOLS = 20;
+const MAX_COMMENT_LENGTH = 140;
 
 const pristine = new Pristine(imgUploadFormElement, {
   classTo: 'img-upload__field-wrapper',
@@ -15,7 +16,7 @@ let errorMessageHashtag = '';
 
 const addHashtagError = () => errorMessageHashtag;
 
-const validateComments = (value) => value.length === 0 || value.length <= 140;
+const validateComments = (value) => value.length === 0 || value.length <= MAX_COMMENT_LENGTH;
 
 const isHashtagValid = (value) => {
   errorMessageHashtag = '';
@@ -63,13 +64,13 @@ const isHashtagValid = (value) => {
   });
 };
 
-const initValidaation = () => {
+const initializeValidation = () => {
   pristine.addValidator(textHashtagsElement, isHashtagValid, () => addHashtagError(), 2, false);
   pristine.addValidator(textCommentsElement, validateComments, 'Максимальная длина 140 символов', 2, false);
 
   textHashtagsElement.addEventListener('keydown', (e) => e.stopPropagation());
   textCommentsElement.addEventListener('keydown', (e) => e.stopPropagation());
 };
-initValidaation();
+initializeValidation();
 
 export {pristine, textCommentsElement, textHashtagsElement};

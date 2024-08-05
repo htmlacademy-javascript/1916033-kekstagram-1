@@ -1,12 +1,12 @@
 import {imgUploadInputElement, imgPreviewElement, effectsPreviewElement} from './search-elements.js';
 
-const EXTENSIONS = ['jpg', 'jpeg', 'png'];
+const IMAGE_FORMATS = ['jpg', 'jpeg', 'png'];
 
 const appendPreviewPhoto = () => {
   const file = imgUploadInputElement.files[0];
   const url = URL.createObjectURL(file);
   const fileName = file.name.toLowerCase();
-  const matches = EXTENSIONS.some((it) => fileName.endsWith(it));
+  const matches = IMAGE_FORMATS.some((it) => fileName.endsWith(it));
   if (matches) {
     imgPreviewElement.src = url;
     imgPreviewElement.alt = file.name;
